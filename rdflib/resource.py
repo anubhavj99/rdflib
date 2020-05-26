@@ -72,10 +72,10 @@ Retrieve some basic facts::
     rdflib.term.URIRef(u'http://example.org/person/some1#self')
 
     >>> person.value(FOAF.name)
-    rdflib.term.Literal(u'Some Body')
+    rdflib.term.Literal('Some Body', datatype=rdflib.term.URIRef('http://www.w3.org/2001/XMLSchema#string'))
 
     >>> person.value(RDFS.comment)
-    rdflib.term.Literal(u'Just a Python & RDF hacker.', lang=u'en')
+    rdflib.term.Literal('Just a Python & RDF hacker.', lang=u'en', datatype=rdflib.term.URIRef('http://www.w3.org/2001/XMLSchema#string'))
 
 Resources can be sliced (like graphs, but the subject is fixed)::
 

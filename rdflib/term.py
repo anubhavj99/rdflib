@@ -582,6 +582,8 @@ class Literal(Identifier):
             inst = str.__new__(cls, lexical_or_value)
         except UnicodeDecodeError:
             inst = str.__new__(cls, lexical_or_value, "utf-8")
+        if datatype is None:
+            datatype = URIRef("http://www.w3.org/2001/XMLSchema#string")
 
         inst._language = lang
         inst._datatype = datatype
@@ -638,7 +640,7 @@ class Literal(Identifier):
         >>> Literal(1) + 1
         rdflib.term.Literal(u'2', datatype=rdflib.term.URIRef(u'http://www.w3.org/2001/XMLSchema#integer'))
         >>> Literal("1") + "1"
-        rdflib.term.Literal(u'11')
+        rdflib.term.Literal('11', datatype=rdflib.term.URIRef('http://www.w3.org/2001/XMLSchema#string'))
         """
 
         # if no val is supplied, return this Literal
@@ -709,7 +711,7 @@ class Literal(Identifier):
         >>> (- Literal("1"))
         Traceback (most recent call last):
           File "<stdin>", line 1, in <module>
-        TypeError: Not a number; rdflib.term.Literal(u'1')
+        TypeError: Not a number; rdflib.term.Literal('1', datatype=rdflib.term.URIRef('http://www.w3.org/2001/XMLSchema#string'))
         >>>
         """
 
@@ -731,7 +733,7 @@ class Literal(Identifier):
         >>> (+ Literal("1"))
         Traceback (most recent call last):
           File "<stdin>", line 1, in <module>
-        TypeError: Not a number; rdflib.term.Literal(u'1')
+        TypeError: Not a number; rdflib.term.Literal('1', datatype=rdflib.term.URIRef('http://www.w3.org/2001/XMLSchema#string'))
         """
         if isinstance(self.value, (int, long_type, float)):
             return Literal(self.value.__pos__())
@@ -750,7 +752,7 @@ class Literal(Identifier):
         >>> abs(Literal("1"))
         Traceback (most recent call last):
           File "<stdin>", line 1, in <module>
-        TypeError: Not a number; rdflib.term.Literal(u'1')
+        TypeError: Not a number; rdflib.term.Literal('1', datatype=rdflib.term.URIRef('http://www.w3.org/2001/XMLSchema#string'))
         """
         if isinstance(self.value, (int, long_type, float)):
             return Literal(self.value.__abs__())
@@ -771,7 +773,7 @@ class Literal(Identifier):
         >>> ~(Literal("1"))
         Traceback (most recent call last):
           File "<stdin>", line 1, in <module>
-        TypeError: Not a number; rdflib.term.Literal(u'1')
+        TypeError: Not a number; rdflib.term.Literal('1', datatype=rdflib.term.URIRef('http://www.w3.org/2001/XMLSchema#string'))
         """
         if isinstance(self.value, (int, long_type, float)):
             return Literal(self.value.__invert__())
@@ -1111,13 +1113,12 @@ class Literal(Identifier):
 
         elif isinstance(other, str):
             # only plain-literals can be directly compared to strings
-
             # TODO: Is "blah"@en eq "blah" ?
             if self.language is not None:
                 return False
-
             if self.datatype == _XSD_STRING or self.datatype is None:
                 return str(self) == other
+
 
         elif isinstance(other, (int, long_type, float)):
             if self.datatype in _NUMERIC_LITERAL_TYPES:
@@ -1148,18 +1149,18 @@ class Literal(Identifier):
         Examples::
 
             >>> Literal("foo").n3()
-            u'"foo"'
+            '"foo"^^<http://www.w3.org/2001/XMLSchema#string>'
 
         Strings with newlines or triple-quotes::
 
             >>> Literal("foo\nbar").n3()
-            u'"""foo\nbar"""'
+            '"""foo\nbar"""^^<http://www.w3.org/2001/XMLSchema#string>'
 
             >>> Literal("''\'").n3()
-            u'"\'\'\'"'
+            '"\'\'\'"^^<http://www.w3.org/2001/XMLSchema#string>'
 
             >>> Literal('"""').n3()
-            u'"\\"\\"\\""'
+            '"\\"\\"\\""^^<http://www.w3.org/2001/XMLSchema#string>'
 
         Language::
 

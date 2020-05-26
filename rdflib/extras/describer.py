@@ -161,7 +161,7 @@ class Describer(object):
             >>> d = Describer(about="http://example.org/")
             >>> d.value(RDFS.label, "Example")
             >>> d.graph.value(URIRef('http://example.org/'), RDFS.label)
-            rdflib.term.Literal(u'Example')
+            rdflib.term.Literal('Example', datatype=rdflib.term.URIRef('http://www.w3.org/2001/XMLSchema#string'))
 
         """
         v = cast_value(v, **kws)
@@ -190,7 +190,7 @@ class Describer(object):
             ...         URIRef('http://example.org/more')) in d.graph
             True
             >>> d.graph.value(URIRef('http://example.org/more'), RDFS.label)
-            rdflib.term.Literal(u'More')
+            rdflib.term.Literal('More', datatype=rdflib.term.URIRef('http://www.w3.org/2001/XMLSchema#string'))
 
         """
 
@@ -217,7 +217,7 @@ class Describer(object):
             ...         URIRef('http://example.org/')) in d.graph
             True
             >>> d.graph.value(URIRef('http://example.net/'), RDFS.label)
-            rdflib.term.Literal(u'Net')
+            rdflib.term.Literal('Net', datatype=rdflib.term.URIRef('http://www.w3.org/2001/XMLSchema#string'))
 
         """
         kws.setdefault("base", self.base)

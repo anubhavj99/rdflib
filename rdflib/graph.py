@@ -434,10 +434,10 @@ class Graph(Node):
         >>> g.add((rdflib.URIRef("urn:bob"), rdflib.RDFS.label, rdflib.Literal("Bob")))
 
         >>> list(g[rdflib.URIRef("urn:bob")]) # all triples about bob
-        [(rdflib.term.URIRef('http://www.w3.org/2000/01/rdf-schema#label'), rdflib.term.Literal('Bob'))]
+        [(rdflib.term.URIRef('http://www.w3.org/2000/01/rdf-schema#label'), rdflib.term.Literal('Bob', datatype=rdflib.term.URIRef('http://www.w3.org/2001/XMLSchema#string')))]
 
         >>> list(g[:rdflib.RDFS.label]) # all label triples
-        [(rdflib.term.URIRef('urn:bob'), rdflib.term.Literal('Bob'))]
+        [(rdflib.term.URIRef('urn:bob'), rdflib.term.Literal('Bob', datatype=rdflib.term.URIRef('http://www.w3.org/2001/XMLSchema#string')))]
 
         >>> list(g[::rdflib.Literal("Bob")]) # all triples with bob as object
         [(rdflib.term.URIRef('urn:bob'), rdflib.term.URIRef('http://www.w3.org/2000/01/rdf-schema#label'))]
@@ -747,25 +747,25 @@ class Graph(Node):
         >>> g.add([u, RDFS.label, Literal("bar")])
         >>> pprint(sorted(g.preferredLabel(u)))
         [(rdflib.term.URIRef('http://www.w3.org/2000/01/rdf-schema#label'),
-          rdflib.term.Literal('bar')),
+          rdflib.term.Literal('bar', datatype=rdflib.term.URIRef('http://www.w3.org/2001/XMLSchema#string'))),
          (rdflib.term.URIRef('http://www.w3.org/2000/01/rdf-schema#label'),
-          rdflib.term.Literal('foo'))]
+          rdflib.term.Literal('foo', datatype=rdflib.term.URIRef('http://www.w3.org/2001/XMLSchema#string')))]
         >>> g.add([u, SKOS.prefLabel, Literal("bla")])
         >>> pprint(g.preferredLabel(u))
         [(rdflib.term.URIRef('http://www.w3.org/2004/02/skos/core#prefLabel'),
-          rdflib.term.Literal('bla'))]
+          rdflib.term.Literal('bla', datatype=rdflib.term.URIRef('http://www.w3.org/2001/XMLSchema#string')))]
         >>> g.add([u, SKOS.prefLabel, Literal("blubb", lang="en")])
         >>> sorted(g.preferredLabel(u)) #doctest: +NORMALIZE_WHITESPACE
         [(rdflib.term.URIRef('http://www.w3.org/2004/02/skos/core#prefLabel'),
-          rdflib.term.Literal('bla')),
+          rdflib.term.Literal('bla', datatype=rdflib.term.URIRef('http://www.w3.org/2001/XMLSchema#string'))),
           (rdflib.term.URIRef('http://www.w3.org/2004/02/skos/core#prefLabel'),
-          rdflib.term.Literal('blubb', lang='en'))]
+          rdflib.term.Literal('blubb', lang='en', datatype=rdflib.term.URIRef('http://www.w3.org/2001/XMLSchema#string')))]
         >>> g.preferredLabel(u, lang="") #doctest: +NORMALIZE_WHITESPACE
         [(rdflib.term.URIRef('http://www.w3.org/2004/02/skos/core#prefLabel'),
-          rdflib.term.Literal('bla'))]
+          rdflib.term.Literal('bla', datatype=rdflib.term.URIRef('http://www.w3.org/2001/XMLSchema#string')))]
         >>> pprint(g.preferredLabel(u, lang="en"))
         [(rdflib.term.URIRef('http://www.w3.org/2004/02/skos/core#prefLabel'),
-          rdflib.term.Literal('blubb', lang='en'))]
+          rdflib.term.Literal('blubb', lang='en', datatype=rdflib.term.URIRef('http://www.w3.org/2001/XMLSchema#string')))]
         """
 
         if default is None:

@@ -16,11 +16,12 @@ class Container(object):
         >>> b = Bag(g, BNode(), [Literal("One"), Literal("Two"), Literal("Three")])
         >>> print(g.serialize(format="turtle").decode())
         @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+        @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
         <BLANKLINE>
         [] a rdf:Bag ;
-            rdf:_1 "One" ;
-            rdf:_2 "Two" ;
-            rdf:_3 "Three" .
+            rdf:_1 "One"^^xsd:string ;
+            rdf:_2 "Two"^^xsd:string ;
+            rdf:_3 "Three"^^xsd:string .
         <BLANKLINE>
         <BLANKLINE>
 
@@ -32,12 +33,13 @@ class Container(object):
         >>> b.append(Literal("Hello"))
         >>> print(g.serialize(format="turtle").decode())
         @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+        @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
         <BLANKLINE>
         [] a rdf:Bag ;
-            rdf:_1 "One" ;
-            rdf:_2 "Two" ;
-            rdf:_3 "Three" ;
-            rdf:_4 "Hello" .
+            rdf:_1 "One"^^xsd:string ;
+            rdf:_2 "Two"^^xsd:string ;
+            rdf:_3 "Three"^^xsd:string ;
+            rdf:_4 "Hello"^^xsd:string .
         <BLANKLINE>
         <BLANKLINE>
 
