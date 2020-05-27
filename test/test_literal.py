@@ -72,12 +72,12 @@ class TestNew(unittest.TestCase):
 
 class TestRepr(unittest.TestCase):
     def testOmitsMissingDatatypeAndLang(self):
-        self.assertEqual(repr(Literal("foo")), uformat("rdflib.term.Literal(u'foo')"))
+        self.assertEqual(repr(Literal("foo")), uformat("rdflib.term.Literal('foo', datatype=rdflib.term.URIRef('http://www.w3.org/2001/XMLSchema#string'))"))
 
     def testOmitsMissingDatatype(self):
         self.assertEqual(
             repr(Literal("foo", lang="en")),
-            uformat("rdflib.term.Literal(u'foo', lang='en')"),
+            uformat("rdflib.term.Literal('foo', lang='en', datatype=rdflib.term.URIRef('http://www.w3.org/2001/XMLSchema#string'))"),
         )
 
     def testOmitsMissingLang(self):
@@ -93,7 +93,7 @@ class TestRepr(unittest.TestCase):
             pass
 
         x = MyLiteral(u"foo")
-        self.assertEqual(repr(x), uformat("MyLiteral(u'foo')"))
+        self.assertEqual(repr(x), uformat("MyLiteral('foo', datatype=rdflib.term.URIRef('http://www.w3.org/2001/XMLSchema#string'))"))
 
 
 class TestDoubleOutput(unittest.TestCase):
@@ -180,7 +180,7 @@ class TestBindings(unittest.TestCase):
         normal_l = Literal(s)
         self.assertEqual(str(normal_l), s)
         self.assertEqual(normal_l.toPython(), s)
-        self.assertEqual(normal_l.datatype, None)
+        self.assertEqual(normal_l.datatype, rdflib.term.URIRef('http://www.w3.org/2001/XMLSchema#string'))
 
         specific_l = Literal("--%s--" % s, datatype=datatype)
         self.assertEqual(str(specific_l), lexify(s))

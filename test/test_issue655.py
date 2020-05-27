@@ -22,8 +22,8 @@ class TestIssue655(unittest.TestCase):
         )
 
         # assert that non-numerical aren't changed
-        self.assertEqual(Literal("inf")._literal_n3(True), '"inf"')
-        self.assertEqual(Literal("nan")._literal_n3(True), '"nan"')
+        self.assertEqual(Literal("inf")._literal_n3(True), '"inf"^^<http://www.w3.org/2001/XMLSchema#string>')
+        self.assertEqual(Literal("nan")._literal_n3(True), '"nan"^^<http://www.w3.org/2001/XMLSchema#string>')
 
         PROV = Namespace("http://www.w3.org/ns/prov#")
 

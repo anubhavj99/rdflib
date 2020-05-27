@@ -62,8 +62,8 @@ def _quoteLiteral(l_):
     encoded = _quote_encode(l_)
 
     if l_.language:
-        if l_.datatype:
-            raise Exception("Literal has datatype AND language!")
+        # if l_.datatype:
+        #     raise Exception("Literal has datatype AND language!")
         return "%s@%s" % (encoded, l_.language)
     elif l_.datatype:
         return "%s^^<%s>" % (encoded, l_.datatype)

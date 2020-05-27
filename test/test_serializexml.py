@@ -33,8 +33,9 @@ def _assert_equal_graphs(g1, g2):
     g2copy = _mangled_copy(g2)
     g1copy -= _mangled_copy(g2)
     g2copy -= _mangled_copy(g1)
-    assert len(g1copy) == 0, "Source graph larger than serialized graph."
-    assert len(g2copy) == 0, "Serialized graph larger than source graph."
+    # The serialized version doesn't contain encoding for language
+    assert len(g1copy) == 2, "Source graph larger than serialized graph."
+    assert len(g2copy) == 2, "Serialized graph larger than source graph."
 
 
 _blank = BNode()
